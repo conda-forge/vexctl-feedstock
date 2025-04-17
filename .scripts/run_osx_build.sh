@@ -70,10 +70,6 @@ source run_conda_forge_build_setup
 
 ( endgroup "Configuring conda" ) 2> /dev/null
 
-if [[ "${HOST_PLATFORM}" != "${BUILD_PLATFORM}" ]]; then
-    EXTRA_CB_OPTIONS="${EXTRA_CB_OPTIONS:-} --no-test"
-fi
-
 if [[ -f LICENSE.txt ]]; then
   cp LICENSE.txt "recipe/recipe-scripts-license.txt"
 fi
@@ -81,6 +77,10 @@ fi
 if [[ "${BUILD_WITH_CONDA_DEBUG:-0}" == 1 ]]; then
     echo "rattler-build does not currently support debug mode"
 else
+
+    if [[ "${HOST_PLATFORM}" != "${BUILD_PLATFORM}" ]]; then
+        EXTRA_CB_OPTIONS="${EXTRA_CB_OPTIONS:-} --test skip"
+    fi
 
     rattler-build build --recipe ./recipe \
         -m ./.ci_support/${CONFIG}.yaml \
