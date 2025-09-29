@@ -1,6 +1,6 @@
 context:
   name: vexctl
-  version: "0.3.0"
+  version: "0.4.0"
 
 package:
   name: ${{ name|lower }}
@@ -8,15 +8,18 @@ package:
 
 source:
   - url: https://github.com/openvex/${{ name }}/archive/refs/tags/v${{ version }}.tar.gz
-    sha256: 5a5904448ef1bf11bd8a165d737acc88afd9799618f6583c15cee5d99dd58e17
+    sha256: 717ba3570aa2ac7db54823e042d8e7c525a10850879585edb7ca859dee966114
     target_directory: src
 
 build:
-  number: 1
+  number: 0
   script:
     - cd src
     # alibabacloud-go/cr-20160607/ has no LICENSE as of version 1.0.1, but is Apache-2.0 licensed.
-    - go-licenses save ./ --save_path ../library_licenses --ignore github.com/openvex/vexctl --ignore github.com/alibabacloud-go/cr-20160607/client
+    # cyberphone/json-canonicalization is Apache-2.0 licensed.
+    # github.com/in-toto/attestation is Apache-2.0 licensed.
+    # github.com/in-toto/in-toto-golang is Apache-2.0 licensed.
+    - go-licenses save ./ --save_path ../library_licenses --ignore github.com/openvex/vexctl --ignore github.com/alibabacloud-go/cr-20160607/client --ignore github.com/cyberphone/json-canonicalization --ignore github.com/in-toto/attestation --ignore github.com/in-toto/in-toto-golang
     - if: win
       then: go install -v .
       else: go build -v -trimpath -o $PREFIX/bin/vexctl ./main.go
