@@ -1,6 +1,6 @@
 context:
   name: vexctl
-  version: "0.4.0"
+  version: "0.4.1"
 
 package:
   name: ${{ name|lower }}
@@ -8,7 +8,7 @@ package:
 
 source:
   - url: https://github.com/openvex/${{ name }}/archive/refs/tags/v${{ version }}.tar.gz
-    sha256: 717ba3570aa2ac7db54823e042d8e7c525a10850879585edb7ca859dee966114
+    sha256: ed77b48de3ead71af608fb3ae5e5f4e19647d87fe9dfe38d4ffce4ee1c1e7c3b
     target_directory: src
 
 build:
